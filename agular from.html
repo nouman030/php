@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>AngularJS Form Validation</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .ng-invalid {
+      border-color: red;
+    }
+    .ng-valid {
+      border-color: green;
+    }
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body ng-controller="FormController">
+
+
+  <h1>Student Registration Form</h1>
+
+  <form name="studentForm" novalidate>
+
+
+    <div>
+      <label for="name">Student Name:</label>
+      <input type="text" id="name" name="name" ng-model="student.name" required>
+      
+      <span class="error-message" ng-show="studentForm.name.$dirty && studentForm.name.$invalid">
+
+            <span ng-show="studentForm.name.$error.required">Student Name is required.</span>
+
+      </span>
+    </div>
+
+    <div>
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" ng-model="student.email" required>
+      <span class="error-message" ng-show="studentForm.email.$dirty && studentForm.email.$invalid">
+        <span ng-show="studentForm.email.$error.required">Email Address is required.</span>
+        <span ng-show="studentForm.email.$error.email">Invalid email address.</span>
+      </span>
+    </div>
+
+    <div>
+      <label for="mobile">Mobile No:</label>
+      <input type="text" id="mobile" name="mobile" ng-model="student.mobile" ng-pattern="/^[0-9]{10}$/" required>
+      <span class="error-message" ng-show="studentForm.mobile.$dirty && studentForm.mobile.$invalid">
+        <span ng-show="studentForm.mobile.$error.required">Mobile No is required.</span>
+        <span ng-show="studentForm.mobile.$error.pattern">Mobile No must be exactly 10 digits.</span>
+      </span>
+    </div>
+    <button type="submit" ng-disabled="studentForm.$invalid">Submit</button>
+  </form>
+  
+  <script>
+    angular.module('myApp', [])
+      .controller('FormController', function($scope) {
+        $scope.student = {}; // Initialize student object
+      });
+  </script>
+</body>
+</html>
